@@ -2,3 +2,5 @@
 <ul>
   <li *ngFor="let c of cuisines$ | async">{{ c.payload.val() }}</li>
 </ul>
+
+{{ (restaurant$ | async)?.name }}
