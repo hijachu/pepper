@@ -27,6 +27,9 @@ export class AppComponent implements OnInit{
 
   exists;
 
+  displayName;
+  photoURL;
+
   constructor(
     private af: AngularFireDatabase,
     public afAuth: AngularFireAuth
@@ -70,13 +73,30 @@ export class AppComponent implements OnInit{
         })
       );
 
-      // /restaurants/1/features/1
-      this.exists = this.af.object('/restaurants/1/features/1').valueChanges();
-      this.exists.pipe(take(1))
-        .subscribe(x => {
-          if (x) console.log("EXISTS");
-          else console.log("NOT EXISTS");
-        });
+    // /restaurants/1/features/1
+    this.exists = this.af.object('/restaurants/1/features/1').valueChanges();
+    this.exists.pipe(take(1))
+      .subscribe(x => {
+        if (x) console.log("EXISTS");
+        else console.log("NOT EXISTS");
+      });
+
+    this.afAuth.authState.subscribe(user => {
+      if (!user) {
+        console.log("NOT LOGGED IN");
+
+        this.displayName = null;
+        this.photoURL = null;
+
+        return;
+      }
+
+      console.log("LOGGED IN", user);
+      console.log(user.displayName);
+      this.displayName = user.displayName;
+      this.photoURL = user.photoURL;
+
+    });
 
   }
 
