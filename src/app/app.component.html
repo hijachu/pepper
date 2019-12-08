@@ -19,6 +19,6 @@
 <h1>Restaurants</h1>
 <ul>
   <li *ngFor="let r of restaurants$ | async">
-    {{ r.name }} -  {{ (r.cuisineType | async)}}
+    {{ r.name }} -  {{ r.cuisineType | async }}
   </li>
 </ul>

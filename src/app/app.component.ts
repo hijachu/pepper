@@ -46,24 +46,6 @@ export class AppComponent implements OnInit{
           return restaurants_new;
         })
       );
-
-
-/*
-    this.restaurants$ = this.restaurants.snapshotChanges()
-      .pipe(
-        map(restaurants => {
-          console.log("BEFORE MAP", restaurants);
-          restaurants.map(restaurant => {
-            console.log(restaurant);
-            // console.log(restaurant.payload.val());
-            console.log('/cuisines/' + restaurant.payload.val().cuisine);
-            restaurant.payload.val().cuisineType = this.af.object('/cuisines/' + restaurant.payload.val().cuisine);
-            console.log(restaurant.payload.val());
-          });
-          return restaurants;
-        })
-      )
-*/
   }
 
   add() {
