@@ -27,13 +27,17 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.cuisines = this.af.list('/cuisines');
+    // this.cuisines = this.af.list('/cuisines');
+    // this.cuisines = this.af.list('/cuisines', ref=>ref.orderByKey());
+    this.cuisines = this.af.list('/cuisines', ref=>ref.orderByValue());
     this.cuisines$ = this.cuisines.snapshotChanges();
 
     this.restaurant = this.af.object('/restaurant');
     this.restaurant$ = this.restaurant.valueChanges();
 
-    this.restaurants = this.af.list('/restaurants');
+    // this.restaurants = this.af.list('/restaurants');
+    // this.restaurants = this.af.list('/restaurants', ref=>ref.orderByChild('name'));
+    this.restaurants = this.af.list('/restaurants', ref=>ref.orderByChild('address/city'));
     this.restaurants$ = this.restaurants.valueChanges()
       .pipe(
         map(restaurants => {
