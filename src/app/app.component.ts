@@ -38,7 +38,8 @@ export class AppComponent implements OnInit{
     // this.restaurants = this.af.list('/restaurants');
     // this.restaurants = this.af.list('/restaurants', ref=>ref.orderByChild('name'));
     // this.restaurants = this.af.list('/restaurants', ref=>ref.orderByChild('address/city'));
-    this.restaurants = this.af.list('/restaurants', ref=>ref.orderByChild('rating').startAt(3).endAt(4));
+    // this.restaurants = this.af.list('/restaurants', ref=>ref.orderByChild('rating').startAt(3).endAt(4));
+    this.restaurants = this.af.list('/restaurants', ref=>ref.orderByChild('rating').equalTo(5).limitToFirst(2));
     this.restaurants$ = this.restaurants.valueChanges()
       .pipe(
         map(restaurants => {
