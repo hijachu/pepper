@@ -35,12 +35,20 @@ export class AppComponent implements OnInit{
     this.restaurants$ = this.restaurants.valueChanges()
       .pipe(
         map(restaurants => {
-          console.log("BEFORE MAP", restaurants);
+          // console.log("BEFORE MAP", restaurants);
 
-          const restaurants_new = restaurants.map(restaurant =>
-            ({ cuisineType: (this.af.object('/cuisines/' + restaurant.cuisine).valueChanges()),
-              ...restaurant })
-          );
+          // const restaurants_new = restaurants.map(restaurant =>
+          //   ({ cuisineType$: (this.af.object('/cuisines/' + restaurant.cuisine).valueChanges()),
+          //     ...restaurant })
+          // );
+
+          const restaurants_new = restaurants.map(restaurant => {
+            restaurant.featureTypes$ = [];
+            for (let f in restaurant.features)
+              restaurant.featureTypes$.push(this.af.object('/features/' + f).valueChanges());
+              
+            return restaurant;
+          });
 
           console.log("AFTER MAP", restaurants_new);
           return restaurants_new;
