@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +20,8 @@ export class AppComponent implements OnInit{
 
   restaurants: AngularFireList<any>;
   restaurants$: Observable<any[]>;
+
+  exists;
 
   constructor(private af: AngularFireDatabase) {
   }
@@ -46,14 +48,22 @@ export class AppComponent implements OnInit{
             restaurant.featureTypes$ = [];
             for (let f in restaurant.features)
               restaurant.featureTypes$.push(this.af.object('/features/' + f).valueChanges());
-              
+
             return restaurant;
           });
 
-          console.log("AFTER MAP", restaurants_new);
+          // console.log("AFTER MAP", restaurants_new);
           return restaurants_new;
         })
       );
+
+      // /restaurants/1/features/1
+      this.exists = this.af.object('/restaurants/1/features/1').valueChanges();
+      this.exists.pipe(take(1))
+        .subscribe(x => {
+          if (x) console.log("EXISTS");
+          else console.log("NOT EXISTS");
+        });
   }
 
   add() {

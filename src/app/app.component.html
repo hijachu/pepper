@@ -15,7 +15,7 @@
     {{ c.key + '-' + c.payload.val() }}
   </li>
 </ul>
-
+<div *ngIf="(exists | async)">EXISTS</div>
 <h1>Restaurants</h1>
 <ul>
   <li *ngFor="let r of restaurants$ | async">
