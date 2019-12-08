@@ -70,6 +70,7 @@ export class AppComponent implements OnInit{
           if (x) console.log("EXISTS");
           else console.log("NOT EXISTS");
         });
+
   }
 
   add() {
@@ -93,4 +94,19 @@ export class AppComponent implements OnInit{
       .catch(error => console.log("ERROR ", error));
   }
 
+  multipleUpdate() {
+    this.af.list('restaurants').push({ name: '' })
+      .then(x => {
+        // x.key
+        let restaurant = { name: 'My New Restaurant' };
+
+        let update = {};
+        // update['restaurants/' + x.key] = restaurant;
+        // update['restaurants-by-city/camberwell/' + x.key] = restaurant;
+        update['restaurants/' + x.key] = null;
+        update['restaurants-by-city/camberwell/' + x.key] = null;
+
+        this.af.object('/').update(update);
+      })
+  }
 }
